@@ -28,6 +28,7 @@ const useGetResourcesApi = ({resources, skip = 0, limit = 30}) => {
         } else {
           throw error;
         }
+        setLoad('unloaded')
       });
     return () => {
       source.cancel();

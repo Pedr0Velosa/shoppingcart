@@ -6,6 +6,11 @@ const useFilterData = (state) => {
   const [categoryItems, setCategoryItems] = useState([]);
   const [nonCategoryItems, setNonCategoryItems] = useState([]);
 
+  useEffect(() => {
+    setDataCategory();
+    setDataNonCategory();
+  }, [state]);
+
   const filterName = (item) => {
     return item.title.toLowerCase().includes(state.filterName.toLowerCase());
   };
@@ -13,28 +18,27 @@ const useFilterData = (state) => {
     return item.category.toLowerCase().includes(state.filterCategory.toLowerCase());
   };
 
-  const filterDataCategory = (type) => {
+  //set items that matches the current category
+  const setDataCategory = () => {
+    setCategoryItems([]);
     return (
       state.data.filter(item =>
         filterName(item) && filterCategory(item))
-        .map(filteredItem => setCategoryItems(oldVal => [...oldVal, filteredItem.id]))
+        .map(filteredItem => setCategoryItems(oldVal => [...oldVal, filteredItem]))
     );
 
   };
 
-  const filterDataNonCategory = () => {
+  //set categorys that doesn't matches the current category
+  const setDataNonCategory = () => {
+    setNonCategoryItems([]);
     let arr = [];
     state.data.filter(item =>
       filterName(item) && !filterCategory(item))
       .map(filteredItem => arr.push(filteredItem.category));
     setNonCategoryItems(Array.from(new Set(arr)));
   };
-  useEffect(() => {
-    setCategoryItems([]);
-    setNonCategoryItems([]);
-    filterDataCategory();
-    filterDataNonCategory();
-  }, [state]);
+
   return [categoryItems, nonCategoryItems];
 };
 

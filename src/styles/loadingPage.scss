@@ -1,0 +1,20 @@
+.loading>*{
+  position: relative;
+  width: fit-content;
+  &::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    animation:loading 1.5s infinite alternate;
+  }
+}
+
+@keyframes loading{
+  0%{
+    background-color: rgb(202,202,202);
+  }
+  100%{
+    background-color: rgb(140,140,140);
+  }
+}

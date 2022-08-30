@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/loadingPage.scss'
 
 const LoadingPage = ({children}) => {
   return (

@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import {useEffect, useReducer, useState} from 'react';
+import {useEffect, useReducer} from 'react';
 import Home from './pages/Home';
 import Header from './components/Header';
 import useGetResourcesApi from './api/useGetResourcesApi';
