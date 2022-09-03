@@ -12,35 +12,43 @@ const Home = ({state, load}) => {
 
   const showCategoryItems = () => {
     return(
-      categoryItems.map((item,index)=>
-      <CardProduct key={index} item={item}/>)
+      <div className='card-container'>
+        {categoryItems.map((item,index)=>
+        <CardProduct key={index} item={item}/>)}
+      </div>
     )
-
   };
 
   const showNonCategoryItems = () => {
     return (
       state.filterName &&
-      nonCategoryList.map((nonCategory) =>
-        <section key={nonCategory}>
+      <div className=''>
+      {nonCategoryList.map((nonCategory) =>
+      <>
+        <div className='product-container' key={nonCategory}>
           <h2><b>Others:</b> {nonCategory}</h2>
+          <div className='card-container'>
           {state.data.filter(item =>
             filterName(item) && item.category === nonCategory)
             .map((filteredItem,index) => 
             <CardProduct key={index} item={filteredItem}/>)}
-        </section>
-      )
+          </div>
+        </div>
+      </>
+        )}
+      </div>
     );
   };
 
   return (
     <main>
       {load === 'loaded' ? (
-        <>
-          <h2 className='uppercase'>{state.filterCategory}</h2>
-          {showCategoryItems()}
-          {showNonCategoryItems()}
-        </>
+        <div className='product-container'>
+          {state.filterCategory && 
+          <h2 className='uppercase'><b>Category:</b> {state.filterCategory}</h2>}
+            {showCategoryItems()}
+            {showNonCategoryItems()}
+        </div>
       ) :  
       //arrumar
       // <LoadingPage>

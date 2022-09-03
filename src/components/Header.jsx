@@ -8,7 +8,7 @@ import {ACTIONS} from '../hooks/dataReducer';
 import CategoryList from './CategoryList';
 import {Link} from 'react-router-dom';
 
-const Header = ({state, dispatch, data, load}) => {
+const Header = ({state,dispatch}) => {
   const [showMenu, setShowMenu] = useState(false);
   const inputRef = useRef(null);
 
@@ -18,6 +18,7 @@ const Header = ({state, dispatch, data, load}) => {
 
   return (
     <header className={`${showMenu ? "header active" : "header"}`}>
+      <div className="container">
       <nav>
         <div className='nav-list'>
           <div className='nav-left'>
@@ -34,7 +35,7 @@ const Header = ({state, dispatch, data, load}) => {
                   dispatch({type: ACTIONS.RESET});
                   inputRef.current.value = '';
                 }}>
-                {<img src={Logo} alt="" className='item' />}
+                {<img src={Logo} alt=""/>}
               </Link>
             </div>
           </div>
@@ -62,19 +63,16 @@ const Header = ({state, dispatch, data, load}) => {
           </div>
         </div>
       </nav>
-      {load === 'loaded' ?
-        <>
-          {state?.data &&
-            <ul className='hidden sm:nav-list sm:justify-start'>
-              <CategoryList state={state} dispatch={dispatch} />
-            </ul>
-          }
-          <HiddenMenu
-            state={state}
-            dispatch={dispatch}
-            handleShowMenu={handleShowMenu} />
-        </> : null
-      }
+      <nav className='category-list'>
+        <ul className='hidden items-category sm:nav-list sm:justify-start'>
+          <CategoryList state={state} dispatch={dispatch} />
+        </ul>
+      </nav>
+      <HiddenMenu
+        dispatch={dispatch}
+        state={state}
+        handleShowMenu={handleShowMenu} />
+      </div>
     </header >
   );
 };
