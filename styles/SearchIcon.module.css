@@ -1,0 +1,21 @@
+.searchIcon{
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+left: 5px;
+pointer-events: none;
+z-index: 1;
+font-size: 2em;
+}
+.container{
+  flex-grow: 2;
+  position: relative;
+  width: 100%;
+  order: 3;
+}
+@media (min-width:800px){
+  .container{
+    order: 0;
+    width: unset;
+  }
+}

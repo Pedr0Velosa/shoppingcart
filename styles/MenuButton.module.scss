@@ -1,0 +1,66 @@
+$Size:26px;
+$TranslateY: 8px;
+$TranslateX: 100px;
+$Transition:250ms all ease-out;
+
+.menu-btn{
+  height: $Size;
+  width: $Size;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  position: relative;
+
+  .btn{
+    display: block;
+    width: $Size;
+    border-radius: 4px;
+    height: 4px;
+    background-color: black;
+    transition: $Transition;
+
+    &::before,&::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      width: $Size;
+      background-color: black;
+      height: 4px;
+      border-radius: inherit;
+      transition: $Transition;
+    }
+    
+    &::before{
+      transform: translateY(-$TranslateY);
+    }
+    &::after{
+      transform: translateY($TranslateY);
+    }
+  }
+
+  &.active{
+    .btn{
+      translate: -$TranslateX;
+      background-color: transparent;
+      transition: $Transition;
+      
+      &::before,&::after{
+        transition: $Transition;
+      }
+
+      &::before{
+        transform: rotate(45deg);
+        translate:$TranslateX;
+      }
+      &::after{
+        transform: rotate(-45deg);
+        translate:$TranslateX;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  $Transition: 0ms all linear;
+}
+
