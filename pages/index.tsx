@@ -4,27 +4,25 @@ import axios from 'axios'
 
 
 const Home: NextPage = ({ data }) => {
-  console.log(data);
 
   return (
     <div>
       <Head>
         <title>Create Next App</title>
       </Head>
-
     </div>
   )
 }
 
 export default Home
 
-export async function getStaticProps() {
-  const data = await axios.get(`${ process.env.BASE_URL }/products?skip=0&limit=30`)
+export const getStaticProps: GetStaticProps = async () => {
+  const data = await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }/products?skip=0&limit=30`)
     .then(response => response.data)
 
   return {
     props: {
-      data: data
+      data: data,
     }
   }
 }

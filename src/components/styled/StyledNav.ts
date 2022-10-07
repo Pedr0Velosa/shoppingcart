@@ -6,7 +6,7 @@ interface prop {
 
 export const StyledNav = styled.nav<prop>`
 display: flex;
-align-items: center;
+align-items: stretch;
 justify-content: space-between;
 flex-direction: ${ props => props.direction };
 padding: 0.5rem 1rem;

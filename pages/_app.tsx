@@ -1,6 +1,8 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import '../styles/globals.css'
 import Layout from '../src/components/Layout'
+import type { AppProps } from 'next/app';
+import CartProvider from '../src/hooks/CartContext/CartProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -22,14 +24,16 @@ const theme: ThemeInterface = {
   },
 }
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <CartProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CartProvider>
       </ThemeProvider>
     </>
   )
