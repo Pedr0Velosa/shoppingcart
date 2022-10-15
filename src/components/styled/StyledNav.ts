@@ -12,6 +12,7 @@ flex-direction: ${ props => props.direction };
 padding: 0.5rem 1rem;
 gap: 1rem;
 flex-wrap: wrap;
+z-index: inherit;
 @media (min-width: 800px){
 
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { OutlineBox, AlignBox } from '../../utils/Imports'
+import { OutlineBox, AlignBox } from '@utils/Imports'
 import Link from 'next/link'
-import { StyledLink } from './styled/StyledLink'
+import { StyledLink } from '../styled/StyledLink'
 
 const Logo = (): JSX.Element => {
   return (

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { styled } from '@mui/system';
-import styles from '../../styles/SearchIcon.module.css';
+import styles from '@styles/SearchIcon.module.css'
 
-import { Search, Box, TextField, InputAdornment } from '../../utils/Imports'
+import { Search, Box, TextField, InputAdornment } from '@utils/Imports'
+import useFilterContext from '@hooks/FilterContext/useFilterContext';
+import { ACTIONS } from '@hooks/FilterContext/filterReducer/filterReducer';
 
 const StyledInput = styled(TextField)({
   label: {
@@ -34,7 +36,7 @@ type SearchBarProps = {
 };
 
 const SearchBar = ({ setNavCover }: SearchBarProps): JSX.Element => {
-  const [searchValue, setSearchValue] = useState<string>('')
+  const { state, dispatch } = useFilterContext()
 
   return (
     <Box
@@ -50,8 +52,8 @@ const SearchBar = ({ setNavCover }: SearchBarProps): JSX.Element => {
         label="Search"
         variant="outlined"
         fullWidth
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={state?.query || ''}
+        onChange={(e) => dispatch({ type: ACTIONS.QUERY, payload: e.target.value })}
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>

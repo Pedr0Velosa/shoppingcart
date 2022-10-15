@@ -1,10 +1,12 @@
 import React from 'react';
 import {
   List, ListItem, ListItemButton, ListItemIcon
-  , ListItemText, Divider, Box
+  , ListItemText, Divider
 } from '@mui/material';
 import { Settings } from '@mui/icons-material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import useFilterContext from '@hooks/FilterContext/useFilterContext';
+import { ACTIONS } from '@hooks/FilterContext/filterReducer/filterReducer';
 
 type DrawerCategoryListType = {
   list: string[] | undefined,
@@ -14,51 +16,49 @@ type DrawerCategoryListType = {
 
 const DrawerCategoryList = ({ list, openMenu, setOpenMenu }: DrawerCategoryListType): JSX.Element => {
 
+  const { dispatch } = useFilterContext()
+
+  const handleClick = (item: string) => {
+    dispatch({ type: ACTIONS.CATEGORY, payload: item })
+    setOpenMenu(!openMenu)
+  }
+
   return (
-    <Box
-      onClick={() => setOpenMenu(!openMenu)}
-      onKeyDown={() => setOpenMenu(!openMenu)}
-    >
-      <nav aria-label="login">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Olá, faça seu login" />
+    <>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Olá, faça seu login" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        {list?.map((item, index) =>
+          <ListItem key={index} disablePadding>
+            <ListItemButton
+              onClick={() => handleClick(item)}
+            >
+              <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
-        </List>
-      </nav>
+        )}
+      </List>
       <Divider />
-      <nav aria-label="category list">
-        <List>
-          {list?.map((item, index) =>
-            <ListItem key={index} disablePadding>
-              <ListItemButton
-              // onClick={() => alert(item)}
-              >
-                <ListItemText primary={item} />
-              </ListItemButton>
-            </ListItem>
-          )}
-        </List>
-      </nav>
-      <Divider />
-      <nav aria-label="settings">
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Settings" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-    </Box>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </>
   );
 }
 

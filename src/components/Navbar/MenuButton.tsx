@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from '../../styles/MenuButton.module.scss'
-import DrawerWrapper from './Drawer/DrawerWrapper'
-import { OutlineBox, AlignBox, Box } from '../../utils/Imports'
-import DrawerCategoryList from './Drawer/DrawerCategoryList';
-import useFetchApi from '../hooks/useFetchApi'
+import styles from '@styles/MenuButton.module.scss'
+import DrawerWrapper from '../Drawer/DrawerWrapper'
+import { OutlineBox, AlignBox, Box } from '@utils/Imports'
+import DrawerCategoryList from '../Drawer/DrawerCategoryList';
+import useFetchApi from '@hooks/useFetchApi'
 
 type MenuButtonProps = {
   openMenu: boolean,

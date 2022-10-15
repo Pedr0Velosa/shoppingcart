@@ -14,7 +14,7 @@ a {
   box-sizing: border-box;
 }
 
-html,body,.__next{
+html,body,#__next{
   height: 100%;
 }
 
@@ -28,6 +28,7 @@ button{
   position: absolute;
   z-index: -1;
   background-color: black;
+  z-index: 10;
   opacity: 0.6;
   inset: 0;
 }

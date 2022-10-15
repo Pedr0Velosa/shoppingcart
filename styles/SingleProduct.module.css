@@ -1,0 +1,26 @@
+.price{
+  display: inline-block;
+  vertical-align: top;
+  line-height: 1;
+}
+.line-through{
+  text-decoration:line-through
+}
+.image-options{
+  display: flex;
+  gap:1rem;
+  flex-direction: column;
+}
+.image-container{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap:1rem;
+}
+.image{
+  cursor: pointer;
+}
+.active{
+  box-shadow: 0px 0px 3px 2px orangered;
+  -webkit-box-shadow: 0px 0px 3px 2px orangered;
+  -moz-box-shadow: 0px 0px 3px 2px orangered;
+}

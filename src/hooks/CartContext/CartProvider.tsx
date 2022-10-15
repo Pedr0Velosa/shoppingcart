@@ -1,23 +1,11 @@
-import React, { createContext, useState } from 'react'
-
-type ProductType = {
-  id: number,
-  title: string,
-  price: number,
-  thumbnail: string,
-  url: string,
-  qtd: number,
-  subtotal: number
-}
-
-type cartType = {
-  products: ProductType[],
-  total: number
-}
+import React, { createContext, Dispatch, useReducer, useState } from 'react'
+import { reducer, initialState } from './cartReducer/cartReducer'
+import { dispatchType } from './cartReducer/cartTypes'
+import { stateCartType } from './cartReducer/cartTypes'
 
 type cartContextType = {
-  cart: cartType | null,
-  setCart: React.Dispatch<React.SetStateAction<cartType | null>>
+  state: stateCartType
+  dispatch: Dispatch<dispatchType>
 }
 
 export const cartContext = createContext({} as cartContextType)
@@ -28,10 +16,10 @@ type CartProviderType = {
 
 const CartProvider = ({ children }: CartProviderType): JSX.Element => {
 
-  const [cart, setCart] = useState<cartType | null>({ products: [], total: 0 })
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <cartContext.Provider value={{ cart, setCart }}>
+    <cartContext.Provider value={{ state, dispatch }}>
       {children}
     </cartContext.Provider>
   )

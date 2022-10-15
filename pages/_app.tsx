@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import Layout from '../src/components/Layout'
 import type { AppProps } from 'next/app';
 import CartProvider from '../src/hooks/CartContext/CartProvider';
+import FilterProvider from '../src/hooks/FilterContext/FilterProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -24,16 +25,18 @@ const theme: ThemeInterface = {
   },
 }
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <CartProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </CartProvider>
+        <FilterProvider>
+          <CartProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </CartProvider>
+        </FilterProvider>
       </ThemeProvider>
     </>
   )
