@@ -1,26 +1,52 @@
-.price{
-  display: inline-block;
-  vertical-align: top;
-  line-height: 1;
-}
-.line-through{
-  text-decoration:line-through
-}
-.image-options{
-  display: flex;
-  gap:1rem;
-  flex-direction: column;
-}
-.image-container{
+.container{
+  max-width: 1600px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap:1rem;
+  grid-template-areas: 
+  "imag imag imag info"
+  "imag imag imag price"
+  "imag imag imag cart"
+  ;
+  padding: 2rem;
+  gap:2rem
 }
-.image{
-  cursor: pointer;
-}
-.active{
+
+/* image */
+
+/* ***** */
+.hovered{
   box-shadow: 0px 0px 3px 2px orangered;
   -webkit-box-shadow: 0px 0px 3px 2px orangered;
   -moz-box-shadow: 0px 0px 3px 2px orangered;
+}
+.clicked{
+  box-shadow: 0px 0px 6px 1px orangered;
+  -webkit-box-shadow: 0px 0px 6px 1px orangered;
+  -moz-box-shadow: 0px 0px 6px 1px orangered;
+}
+
+/* price */
+.inline{
+  vertical-align: top;
+  display: inline-flex;
+}
+.symbol,.decimal{
+  font-weight: 400;
+  /* default Typography h6 style */
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+@media (max-width:760px){
+  .container{
+    display: grid;
+    grid-template-areas: 
+    "info"
+    "imag"
+    "price"
+    "cart"
+    ;
+    gap:2.5rem;
+    padding: 4%;
+  }
 }

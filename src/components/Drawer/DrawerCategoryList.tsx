@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  List, ListItem, ListItemButton, ListItemIcon
-  , ListItemText, Divider
-} from '@mui/material';
-import { Settings } from '@mui/icons-material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import useFilterContext from '@hooks/FilterContext/useFilterContext';
-import { ACTIONS } from '@hooks/FilterContext/filterReducer/filterReducer';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Settings, AccountCircleIcon, useFilterContext } from '@imports/Imports'
+import { ACTIONS } from '@lib/contexts/FilterContext/filterReducer/filterReducer';
 
 type DrawerCategoryListType = {
   list: string[] | undefined,

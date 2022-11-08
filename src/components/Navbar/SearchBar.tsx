@@ -1,10 +1,10 @@
-import React from 'react'
-import { styled } from '@mui/system';
-import styles from '@styles/SearchIcon.module.css'
+import React, { useState } from 'react'
 
-import { Search, Box, TextField, InputAdornment } from '@utils/Imports'
-import useFilterContext from '@hooks/FilterContext/useFilterContext';
-import { ACTIONS } from '@hooks/FilterContext/filterReducer/filterReducer';
+import { styled } from '@mui/system';
+
+import { Search, Box, TextField, InputAdornment, Close } from '@imports/Imports'
+import useFilterContext from '@lib/contexts/FilterContext/useFilterContext';
+import { ACTIONS } from '@lib/contexts/FilterContext/filterReducer/filterReducer';
 
 const StyledInput = styled(TextField)({
   label: {
@@ -31,42 +31,61 @@ const StyledInput = styled(TextField)({
   minWidth: 200
 });
 
-type SearchBarProps = {
-  setNavCover: (val: boolean) => void
-};
 
-const SearchBar = ({ setNavCover }: SearchBarProps): JSX.Element => {
-  const { state, dispatch } = useFilterContext()
+const SearchBar = (): JSX.Element => {
+  const { dispatch } = useFilterContext()
+  const [inputValue, setInputValue] = useState<string | null>(null)
+
+  const InputPropsObj = {
+    startAdornment: (
+      <InputAdornment position='start'>
+        <Search
+          fontSize='large'
+          aria-hidden={true}
+          sx={{ color: 'black' }}
+        />
+      </InputAdornment>
+    ),
+    endAdornment: (
+      inputValue ?
+        <InputAdornment
+          position='end'
+          onClick={() => setInputValue(null)}
+          sx={{ cursor: 'pointer' }}
+        >
+          <Close
+            fontSize='medium'
+          />
+        </InputAdornment> : null
+    )
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    dispatch({ type: ACTIONS.QUERY, payload: inputValue || "" })
+  }
 
   return (
-    <Box
-      component="form"
-      autoComplete='off'
-      onClick={() => setNavCover(true)}
-      onFocus={() => setNavCover(true)}
-      onBlur={() => setNavCover(false)}
-      sx={{ flex: 2, order: { xs: 2, sm: 0 } }}
-    >
-      <StyledInput
-        id="search"
-        label="Search"
-        variant="outlined"
-        fullWidth
-        value={state?.query || ''}
-        onChange={(e) => dispatch({ type: ACTIONS.QUERY, payload: e.target.value })}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position='start'>
-              <Search
-                className={styles.searchIcon}
-                aria-hidden={true}
-              />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </Box>
+    <>
+      <Box
+        component="form"
+        autoComplete='off'
+        sx={{ flex: 2, order: { xs: 2, sm: 0 } }}
+        onSubmit={handleSubmit}
+      >
+        <StyledInput
+          id="search"
+          label="Search"
+          variant="outlined"
+          fullWidth
+          value={inputValue || ''}
+          onChange={(e) => setInputValue(e.target.value)}
+          InputProps={InputPropsObj}
+        />
+      </Box>
+    </>
   )
 }
 
-export default SearchBar
+export default SearchBar;
+

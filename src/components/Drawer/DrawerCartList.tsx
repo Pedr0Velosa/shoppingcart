@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
-import {
-  List, ListItem, ListItemButton, ListItemIcon
-  , ListItemText
-} from '@mui/material';
-import useCartContext from '@hooks/CartContext/useCartContext';
+import React from 'react';
+import { List, ListItem } from '@imports/Imports'
+import useCartContext from '@lib/contexts/CartContext/useCartContext';
 
 type DrawerCartListType = {
   products: string[] | undefined,

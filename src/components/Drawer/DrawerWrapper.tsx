@@ -1,5 +1,5 @@
 import React from 'react';
-import Drawer from '@mui/material/Drawer';
+import { Drawer } from '@imports/Imports'
 
 type AnchorType = 'top' | 'bottom' | 'left' | 'right' | undefined
 type DrawerWrapperType = {
@@ -9,7 +9,7 @@ type DrawerWrapperType = {
   anchor: AnchorType,
 }
 
-const DrawerWrapper = ({ open, setOpen, anchor = 'left', children }: DrawerWrapperType): JSX.Element => {
+const DrawerWrapper = ({ open, setOpen, anchor, children }: DrawerWrapperType): JSX.Element => {
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

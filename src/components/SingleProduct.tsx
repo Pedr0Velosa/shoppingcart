@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import Image from './Image'
-import { ProductsType } from '@pages/index'
-import { Typography } from '@mui/material'
-import { StaticImageData } from 'next/image'
+import React from 'react'
+import { ProductsType } from '@pages/product/index'
+import { Typography, StyledButton } from '@imports/Imports'
 import styles from '@styles/SingleProduct.module.css'
+import Carousel from './Carousel/Carousel'
+import ProdutcImages from './ProductImages/ProdutcImages'
 
 type SingleProductProps = {
   product: ProductsType | null,
@@ -11,101 +11,69 @@ type SingleProductProps = {
 }
 
 const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.Element => {
-  const [imageToShow, setImageToShow] = useState<string | StaticImageData>('/assets/blur.webp')
-
-  useEffect(() => {
-    if (!product?.thumbnail) return
-    setImageToShow(product.thumbnail)
-  }, [])
 
   if (!product) {
     return <>não deu</>
   }
 
+  function handleNumberFormat(price: number) {
+    const formatPrice = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price)
+    const [integer, decimal] = formatPrice.split(',')
+    return (
+      <>
+        <Typography variant={'h4'} component={'span'} className={`${ styles.symbol } ${ styles.inline }`}>
+          $
+        </Typography>
+        <Typography variant={'h4'} component={'span'} className={`${ styles.integer } ${ styles.inline }`}>
+          {integer}
+        </Typography>
+        <Typography variant={'h4'} component={'span'} className={`${ styles.decimal } ${ styles.inline }`}>
+          {decimal}
+        </Typography>
+      </>
+    )
+  }
+
   return (
-    <>
-      <div className={styles['image-container']}>
-        <div className={styles['image-options']}>
-          {product?.images.map((image, index) => (
-            <Image
-              key={index}
-              onMouseEnter={() => setImageToShow(image)}
-              onError={() => {
-                setImageToShow('/assets/blur.webp');
-              }}
-              src={image}
-              alt={`${ product.title } photo`}
-              height={'60px'}
-              width={'60px'}
-              placeholder='blur'
-              blurDataURL={'/assets/blur.webp'}
-              layout="fixed"
-              quality={100}
-              isIcon={true}
-              isActive={image === imageToShow}
-            />
-          ))}
-        </div>
-        <Image
-          onError={() => {
-            setImageToShow('/assets/blur.webp')
-          }}
-          src={imageToShow}
-          alt={`${ product.title } photo`}
-          height={'60px'}
-          width={'60px'}
-          placeholder='blur'
-          blurDataURL={'/assets/blur.webp'}
-          layout='responsive'
-          quality={100}
-        />
+    <div className={styles.container}>
+      <div className={styles.name}>
+        <Typography variant='subtitle1' component={'h2'}>
+          {product.brand}
+        </Typography>
+        <Typography variant='h5' component={'h1'}>
+          {product.title}
+        </Typography>
       </div>
-      <div>
-        <div>
-          <Typography variant='caption'>
-            {product.brand}
-          </Typography>
-          <Typography variant='h6'>
-            {product.title}
-          </Typography>
-        </div>
-        <div>
-          {discount ?
-            <>
-              <Typography variant='body1'>
-                U$
-                <Typography
-                  component={'span'}
-                  variant={'h4'}
-                  className={styles.price}
-                >
-                  {product.price}
-                </Typography>
-              </Typography>
-              <Typography
-                sx={{ fontWeight: 'normal' }}
-                color={'GrayText'}
-                variant='subtitle2'
-              >
-                From:
-                <Typography
-                  component={'span'}
-                  className={styles['line-through']}
-                >
-                  {" "}U${product.price}
-                </Typography>
-              </Typography>
-            </> :
-            <>
-              <Typography variant='body1'>
-                U$ {product.price}
-              </Typography>
-            </>
-          }
-        </div>
+      <div className={styles.image}>
+        <Carousel images={product.images} />
+        <ProdutcImages />
       </div>
-    </>
+      <div className={styles.description}>
+        <Typography variant='body1'>
+          {product.description}
+        </Typography>
+      </div>
+      <div className={styles.price}>
+        {!discount ?
+          <Typography component={'span'}>
+            {handleNumberFormat(product.price)}
+          </Typography> :
+          <Typography>
+            discount
+          </Typography>
+        }
+      </div>
+      <div className={styles.cart}>
+        <Typography>
+          Stock: {product.stock}
+        </Typography>
+        <StyledButton>
+          add cart
+        </StyledButton>
+      </div>
+    </div>
   )
 }
 
-export default SingleProduct
+export default SingleProduct;
+

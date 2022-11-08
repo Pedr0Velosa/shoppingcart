@@ -1,27 +1,61 @@
-import React, { useState } from 'react'
-import NextImage, { ImageProps } from 'next/image'
+import React, { useEffect, useState } from 'react'
+import NextImage, { ImageProps, StaticImageData } from 'next/image'
 import styles from '@styles/SingleProduct.module.css'
-import { ClassNames } from '@emotion/react'
+import classNames from "classnames";
 
 interface CustomProps extends ImageProps {
   isIcon?: boolean,
-  isActive?: boolean
+  isHover?: boolean
 }
 
-const Image = ({ isIcon, isActive = false, ...props }: CustomProps): JSX.Element => {
+const Image = ({ isIcon, src, ...props }: CustomProps): JSX.Element => {
+
+  const [imgSrc, setImgSrc] = useState<string | StaticImageData>('/assets/blur.webp')
 
   const [isClicked, setIsClicked] = useState<boolean>(false)
+  const [isHovered, setIsHovered] = useState<boolean>(false)
 
-  if (!isIcon) return <NextImage {...props} />
+  const handleEvents = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, bool: boolean | ((prevState: boolean) => boolean)) => {
+    e.preventDefault()
+    setIsClicked(bool)
+  }
+
+  useEffect(() => {
+    setImgSrc(src as string)
+  }, [src])
+
+  if (!isIcon) return (
+    <NextImage
+      src={imgSrc}
+      onError={() => {
+        setImgSrc('/assets/blur.webp')
+      }}
+      blurDataURL={'/assets/blur.webp'}
+      {...props}
+    />
+  )
 
   return (
     <div
-      className={`${ isActive ? [styles.image, styles.active].join(" ") : '' }`}
-      style={isClicked ? { boxShadow: '0px 0px 6px 1px orangered' } : {}}
-      onMouseDown={() => setIsClicked(true)}
-      onMouseUp={() => setIsClicked(false)}
+      className={classNames({
+        [styles.image]: true,
+        [styles.hovered]: isHovered,
+        [styles.clicked]: isHovered && isClicked,
+      })}
+      style={{ width: props.width, height: props.height, cursor: 'pointer' }}
+      onMouseDown={(e) => handleEvents(e, true)}
+      onMouseUp={(e) => handleEvents(e, false)}
+      onMouseEnter={(e) => handleEvents(e, true)}
+      onMouseLeave={(e) => handleEvents(e, false)}
     >
-      <NextImage {...props} />
+      <NextImage
+        src={imgSrc}
+        onError={() => {
+          setImgSrc('/assets/blur.webp')
+        }}
+        blurDataURL={'/assets/blur.webp'}
+        {...props}
+      />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { OutlineBox, AlignBox } from '@utils/Imports'
+import { OutlineBox, AlignBox } from '@imports/Imports'
 import Link from 'next/link'
 import { StyledLink } from '../styled/StyledLink'
 
@@ -7,7 +7,7 @@ const Logo = (): JSX.Element => {
   return (
     <OutlineBox>
       <AlignBox>
-        <Link href={'/'} passHref>
+        <Link href={'/product'} passHref>
           <StyledLink id='logo'>
             PEDROZON
           </StyledLink>

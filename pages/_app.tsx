@@ -1,17 +1,11 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import '../styles/globals.css'
-import Layout from '../src/components/Layout'
+import { ThemeProvider } from 'styled-components'
+import '@styles/globals.css'
+import Layout from '@components/Layout'
 import type { AppProps } from 'next/app';
-import CartProvider from '../src/hooks/CartContext/CartProvider';
-import FilterProvider from '../src/hooks/FilterContext/FilterProvider';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-`
+import CartProvider from '@lib/contexts/CartContext/CartProvider';
+import FilterProvider from '@lib/contexts/FilterContext/FilterProvider';
+import { Hydrate, QueryClient, QueryClientProvider, DehydratedState } from 'react-query'
+import { useRef } from 'react'
 
 interface ThemeInterface {
   colors: {
@@ -25,19 +19,25 @@ const theme: ThemeInterface = {
   },
 }
 
-export default function App({ Component, pageProps }: AppProps): JSX.Element {
+export default function App({ Component, pageProps }: AppProps<{ dehydratedState: DehydratedState }>): JSX.Element {
+
+  const queryClient = useRef(new QueryClient())
+
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <FilterProvider>
-          <CartProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </CartProvider>
-        </FilterProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient.current}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ThemeProvider theme={theme}>
+            <FilterProvider>
+              <CartProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </CartProvider>
+            </FilterProvider>
+          </ThemeProvider>
+        </Hydrate>
+      </QueryClientProvider>
     </>
   )
 }

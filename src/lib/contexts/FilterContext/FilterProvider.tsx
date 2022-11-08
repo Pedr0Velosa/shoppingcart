@@ -2,10 +2,6 @@ import React, { createContext, Dispatch, useReducer } from 'react'
 import { reducer, initialState } from './filterReducer/filterReducer'
 import type { stateType, dispatchType } from './filterReducer/filterTypes'
 
-type FilterProviderType = {
-  children: React.ReactNode
-}
-
 type filterContextType = {
   state: stateType
   dispatch: Dispatch<dispatchType>
@@ -13,7 +9,7 @@ type filterContextType = {
 
 export const filterContext = createContext({} as filterContextType)
 
-const FilterProvider = ({ children }: FilterProviderType): JSX.Element => {
+const FilterProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
 
   const [state, dispatch] = useReducer(reducer, initialState)
 

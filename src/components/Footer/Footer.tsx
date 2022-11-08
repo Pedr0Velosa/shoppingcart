@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledButton } from '@utils/Imports'
+import { StyledButton } from '@lib/utils/Imports'
 
 const Footer = () => {
   return (

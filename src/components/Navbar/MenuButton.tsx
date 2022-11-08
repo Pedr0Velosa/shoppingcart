@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from '@styles/MenuButton.module.scss'
 import DrawerWrapper from '../Drawer/DrawerWrapper'
-import { OutlineBox, AlignBox, Box } from '@utils/Imports'
+import { OutlineBox, AlignBox, Box } from '@imports/Imports'
 import DrawerCategoryList from '../Drawer/DrawerCategoryList';
-import useFetchApi from '@hooks/useFetchApi'
+import useFetchApi from '@lib/hooks/useFetchApi'
 
 type MenuButtonProps = {
   openMenu: boolean,
@@ -30,9 +30,10 @@ const MenuButton = ({ openMenu, setOpenMenu }: MenuButtonProps): JSX.Element => 
       <DrawerWrapper
         open={openMenu}
         setOpen={setOpenMenu}
+        anchor='left'
       >
         <DrawerCategoryList
-          list={data}
+          list={data as any}
           setOpenMenu={setOpenMenu}
           openMenu={openMenu} />
       </DrawerWrapper>

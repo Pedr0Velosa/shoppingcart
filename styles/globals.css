@@ -14,8 +14,18 @@ a {
   box-sizing: border-box;
 }
 
+/* max-heigth */
 html,body,#__next{
   height: 100%;
+}
+
+/* main disply */
+#__next{
+  display: flex;
+  flex-direction: column;
+}
+main{
+  flex-grow: 2;
 }
 
 button{

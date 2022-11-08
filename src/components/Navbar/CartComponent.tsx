@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { OutlineBox, AlignBox, StyledButton } from '@utils/Imports'
-import { Badge } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge, ShoppingCartIcon, OutlineBox, AlignBox, StyledButton } from '@imports/Imports'
 import DrawerWrapper from '../Drawer/DrawerWrapper';
 import DrawerCartList from '../Drawer/DrawerCartList';
 

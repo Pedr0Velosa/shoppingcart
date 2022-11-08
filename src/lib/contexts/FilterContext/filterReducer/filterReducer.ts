@@ -1,12 +1,11 @@
 import { dispatchType, stateType } from "./filterTypes";
-import { Reducer } from 'react'
 
 export const ACTIONS = {
   QUERY: 'query',
   CATEGORY: 'category'
 }
 
-export const reducer = (state: stateType, { type, payload }: dispatchType): stateType => {
+export const reducer = (state: stateType, { type, payload }: dispatchType) => {
 
   switch (type) {
     case ACTIONS.QUERY:

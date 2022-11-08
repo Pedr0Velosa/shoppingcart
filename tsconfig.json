@@ -23,8 +23,8 @@
       "@components/*": [
         "src/components/*"
       ],
-      "@hooks/*": [
-        "src/hooks/*"
+      "@lib/*": [
+        "src/lib/*"
       ],
       "@styles/*": [
         "styles/*"
@@ -35,6 +35,9 @@
       "@pages/*": [
         "pages/*"
       ],
+      "@imports/*": [
+        "src/lib/utils/*"
+      ]
     }
   },
   "include": [

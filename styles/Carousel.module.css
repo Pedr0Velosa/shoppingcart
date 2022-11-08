@@ -1,0 +1,55 @@
+.container{
+  max-width: 300px;
+  margin:0 2%;
+  overflow: hidden;
+}
+
+.dots{
+  list-style-type: none;
+  width: max-content;
+  padding: 0;
+  margin: 0.5rem auto 0;
+  cursor: default;
+}
+
+.dots li{
+  display: inline-block;
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  margin: 0 0.325rem;
+  background-color: transparent;
+  border:1px solid #949494;
+  border-radius: 9999px;
+  transition: background-color 0.5 linear;
+}
+.dots .selected{
+  background-color: #949494;
+  transition: background-color 0.5 linear;
+}
+
+.carousel{
+  overflow: hidden;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.inner-carousel{
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  gap:2rem;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+}
+.inner-carousel > li{
+  scroll-snap-align: start;
+}
+
+@media (min-width:800px){
+  .carousel{
+    display: none;
+  }
+}
