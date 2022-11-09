@@ -1,54 +1,96 @@
 .container{
   display: grid;
   grid-template-areas: 
-  "info"
-  "imag"
+  "name"
+  "image"
   "price"
+  "desc"
   "cart"
   ;
   gap:2.5rem;
   padding: 4%;
 }
+.image-container{
+  display: none;
+}
+/* grid name */
+.name{
+  grid-area: name;
+}
+.price{
+  grid-area: price;
+}
+.image{
+  grid-area: image;
+}
+.info{
+  grid-area: info;
+}
+.description{
+  grid-area: desc;
+}
+/* **** */
 
-
+/* price */
+.inline{
+  vertical-align: top;
+  display: inline-flex;
+}
+.integer{
+  font-size: 2rem;
+  line-height: 1.25;
+}
+.symbol,.decimal{
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+/* *** */
 
 @media (min-width:760px){
   .container{
-    max-width: 1600px;
-    margin: 0 auto;
+    /* 1100px */
+    max-width: 69rem;
+    margin: 2rem auto;
     display: grid;
     grid-template-areas: 
-    "imag imag imag info"
-    "imag imag imag price"
-    "imag imag imag cart"
+    "image image image name"
+    "image image image price"
+    "image image image cart"
+    "image image image desc"
     ;
     padding: 2rem;
     gap:2rem
   }
-  
+  .rating-container{
+    position: relative;
+    max-width: max-content;
+    cursor: pointer;
+  }
   /* image */
-  
-  /* ***** */
-  .hovered{
+  .image-container{
+    display: flex;
+    gap: 3rem;
+  }
+  .icon{
+    margin-block: 1rem;
+  }
+  .icon:hover,.selected{
     box-shadow: 0px 0px 3px 2px orangered;
     -webkit-box-shadow: 0px 0px 3px 2px orangered;
     -moz-box-shadow: 0px 0px 3px 2px orangered;
   }
-  .clicked{
+  .icon.clicked{
     box-shadow: 0px 0px 6px 1px orangered;
     -webkit-box-shadow: 0px 0px 6px 1px orangered;
     -moz-box-shadow: 0px 0px 6px 1px orangered;
   }
-  
-  /* price */
-  .inline{
-    vertical-align: top;
-    display: inline-flex;
+  /* ***** */
+  .name{
+    margin-top: 2rem;
   }
-  .symbol,.decimal{
-    font-weight: 400;
-    /* default Typography h6 style */
-    font-size: 1.25rem;
-    line-height: 1.6;
+  .rating{
+    position: absolute;
+    top: 20px;
+    right: -70px;
   }
 }

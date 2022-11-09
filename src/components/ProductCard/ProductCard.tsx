@@ -1,15 +1,9 @@
 import type { ProductsType } from '@lib/types/HomePageTypes';
 import { Card, CardContent, Typography, Rating } from '@imports/Imports'
 import styles from '@styles/Homes.module.css';
-import styled from 'styled-components';
 import Link from 'next/link';
-import Image from 'next/image'
+import Image from '@components/Image';
 
-const StyledCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-`
 type ProductCardType = {
   item: ProductsType,
   isLastItem: boolean,
@@ -21,15 +15,16 @@ const ProductCard = ({ item, isLastItem, reference }: ProductCardType) => {
   if (isLastItem && reference) {
     return (
       <Link href={`/product/${ item.id }`} >
-        <StyledCard
+        <Card
           className={styles.content}
           ref={reference}
         >
           <Image
             src={item.thumbnail}
             alt={item.description}
-            height={'200px'}
-            width={'250px'}
+            height={200}
+            width={250}
+            isIcon={false}
           />
           <CardContent>
             <Typography variant="subtitle2" >
@@ -38,27 +33,29 @@ const ProductCard = ({ item, isLastItem, reference }: ProductCardType) => {
             <Typography className={styles['overflow-paragraph']} variant="body1" gutterBottom>
               {item.description}
             </Typography>
-            <Rating name="rating-star"
+            <Rating
+              name="rating-star"
               defaultValue={item.rating}
               precision={0.25}
               size="large"
               readOnly />
           </CardContent>
-        </StyledCard>
+        </Card>
       </Link>
     )
   }
 
   return (
     <Link href={`/product/${ item.id }`}>
-      <StyledCard
+      <Card
         className={styles.content}
       >
         <Image
           src={item.thumbnail}
           alt={item.description}
-          height={'200px'}
-          width={'250px'}
+          height={200}
+          width={250}
+          isIcon={false}
         />
         <CardContent>
           <Typography variant="subtitle2" >
@@ -73,7 +70,7 @@ const ProductCard = ({ item, isLastItem, reference }: ProductCardType) => {
             size="large"
             readOnly />
         </CardContent>
-      </StyledCard>
+      </Card>
     </Link>
   )
 }

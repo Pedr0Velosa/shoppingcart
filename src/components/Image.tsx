@@ -5,17 +5,16 @@ import classNames from "classnames";
 
 interface CustomProps extends ImageProps {
   isIcon?: boolean,
-  isHover?: boolean
+  isSelected?: boolean
 }
 
-const Image = ({ isIcon, src, ...props }: CustomProps): JSX.Element => {
+const Image = ({ isIcon, src, isSelected, ...props }: CustomProps): JSX.Element => {
 
   const [imgSrc, setImgSrc] = useState<string | StaticImageData>('/assets/blur.webp')
 
   const [isClicked, setIsClicked] = useState<boolean>(false)
-  const [isHovered, setIsHovered] = useState<boolean>(false)
 
-  const handleEvents = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, bool: boolean | ((prevState: boolean) => boolean)) => {
+  const handleClick = (e: React.MouseEvent, bool: boolean) => {
     e.preventDefault()
     setIsClicked(bool)
   }
@@ -37,16 +36,13 @@ const Image = ({ isIcon, src, ...props }: CustomProps): JSX.Element => {
 
   return (
     <div
-      className={classNames({
-        [styles.image]: true,
-        [styles.hovered]: isHovered,
-        [styles.clicked]: isHovered && isClicked,
+      className={classNames(styles.icon, {
+        [styles.clicked]: isClicked,
+        [styles.selected]: isSelected
       })}
       style={{ width: props.width, height: props.height, cursor: 'pointer' }}
-      onMouseDown={(e) => handleEvents(e, true)}
-      onMouseUp={(e) => handleEvents(e, false)}
-      onMouseEnter={(e) => handleEvents(e, true)}
-      onMouseLeave={(e) => handleEvents(e, false)}
+      onMouseDown={(e) => handleClick(e, true)}
+      onMouseUp={(e) => handleClick(e, false)}
     >
       <NextImage
         src={imgSrc}
