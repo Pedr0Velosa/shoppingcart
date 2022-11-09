@@ -1,14 +1,18 @@
-import type { NextPage, GetStaticProps } from 'next'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
-import ProductCard from '@components/ProductCard'
+
 import styles from '@styles/Homes.module.css'
-import axios from 'axios'
-import { dehydrate, QueryClient, useQuery, useInfiniteQuery } from 'react-query'
-import type { DataType, ProductsType } from '@lib/types/HomePageTypes'
-import { useState, useEffect } from 'react'
-import HomePageLoading from '@components/Loading/HomePageLoading'
+
+import ProductCard from '@components/ProductCard/ProductCard'
+import HomePageLoading from '@components/Loading/HomePage/HomePageLoading'
+import LoadingNewProducts from '@components/Loading/HomePage/LoadingNewProducts'
+
 import { useInView } from 'react-intersection-observer'
-import React from 'react'
+import { dehydrate, QueryClient, useInfiniteQuery } from 'react-query'
+import axios from 'axios'
+
+import type { NextPage, GetStaticProps } from 'next'
+import type { DataType, ProductsType } from '@lib/types/HomePageTypes'
 
 const getProductsData = async (skip: number) => {
   return await (await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }/products?skip=${ skip }&limit=30`)
@@ -18,16 +22,21 @@ const getProductsData = async (skip: number) => {
 const Home: NextPage = () => {
 
   const { ref, inView } = useInView()
-  const [skip, setSkip] = useState(0)
   const {
     fetchNextPage,
+    isLoading,
+    error,
     hasNextPage,
     data
   } = useInfiniteQuery<DataType>(
     ['products'],
     async ({ pageParam = 0 }) => getProductsData(pageParam),
     {
-      getNextPageParam: (lastPage) => lastPage.skip + 30
+      getNextPageParam: (lastPage) => {
+        if (!lastPage) return undefined
+        if (parseInt(lastPage.skip) > 100) return undefined
+        return lastPage.skip + 30
+      }
     }
   )
 
@@ -38,9 +47,13 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
-  // if (isLoading) return <HomePageLoading />
+  if (isLoading) return (
+    <div className={styles.container}>
+      <HomePageLoading />
+    </div>
+  )
 
-  // if (error) return <>Error</>
+  if (error) return <>Error</>
 
   return (
     <>
@@ -50,7 +63,7 @@ const Home: NextPage = () => {
       <div className={styles.container}>
         {
           data?.pages?.map(page => (
-            page.products?.map((item: ProductsType, index: number) =>
+            page?.products?.map((item: ProductsType, index: number) =>
               <React.Fragment key={item.id}>
                 <ProductCard
                   item={item}
@@ -61,8 +74,13 @@ const Home: NextPage = () => {
             )
           ))
         }
-        {hasNextPage ? <>não</> : <>sim</>}
       </div>
+      {!isLoading && hasNextPage ?
+        <LoadingNewProducts /> :
+        <div style={{ textAlign: 'center', marginBlock: '2rem' }}>
+          There aren&apos;t more products
+        </div>
+      }
     </>
   )
 }

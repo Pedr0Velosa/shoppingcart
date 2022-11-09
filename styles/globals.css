@@ -1,7 +1,5 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
   font-family: 'Quicksand', sans-serif;
 }
 
@@ -10,8 +8,10 @@ a {
   text-decoration: none;
 }
 
-* {
+*,*::before,*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* max-heigth */
@@ -19,7 +19,7 @@ html,body,#__next{
   height: 100%;
 }
 
-/* main disply */
+/* main display */
 #__next{
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProductsType } from '@pages/product/index'
+import { ProductsType } from '@lib/types/HomePageTypes'
 import { Typography, StyledButton } from '@imports/Imports'
 import styles from '@styles/SingleProduct.module.css'
 import Carousel from './Carousel/Carousel'

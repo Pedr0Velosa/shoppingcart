@@ -1,11 +1,9 @@
-import React, { Ref } from 'react'
 import type { ProductsType } from '@lib/types/HomePageTypes';
 import { Card, CardContent, Typography, Rating } from '@imports/Imports'
 import styles from '@styles/Homes.module.css';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image'
-import { useRef, useEffect } from 'react'
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -15,12 +13,12 @@ const StyledCard = styled(Card)`
 type ProductCardType = {
   item: ProductsType,
   isLastItem: boolean,
-  reference: (node?: Element | null | undefined) => void
+  reference: ((node?: Element | null | undefined) => void)
 }
 
 const ProductCard = ({ item, isLastItem, reference }: ProductCardType) => {
 
-  if (isLastItem) {
+  if (isLastItem && reference) {
     return (
       <Link href={`/product/${ item.id }`} >
         <StyledCard
