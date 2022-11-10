@@ -14,32 +14,41 @@ import axios from 'axios'
 import type { NextPage, GetStaticProps } from 'next'
 import type { DataType, ProductsType } from '@lib/types/HomePageTypes'
 
-const getProductsData = async (skip: number) => {
-  return await (await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }/products?skip=${ skip }&limit=30`)
+type GetProductsDataType = {
+  pageParam: number,
+  signal: AbortSignal | undefined
+}
+
+const getProductsData = async ({ pageParam = 0, signal }: GetProductsDataType) => {
+  return await (await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }/products?skip=${ pageParam ?? 0 }&limit=30`, { signal })
+    .then(response => response.data))
+}
+const getCategorysData = async ({ signal }: { signal: AbortSignal | undefined }) => {
+  return await (await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }${ process.env.NEXT_PUBLIC_CATEGORYS_URL }`, { signal })
     .then(response => response.data))
 }
 
 const Home: NextPage = () => {
 
-  const { ref, inView } = useInView()
+  const { ref, inView } = useInView();
+
   const {
     fetchNextPage,
+    isFetchingNextPage,
     isLoading,
     error,
     hasNextPage,
     data
   } = useInfiniteQuery<DataType>(
     ['products'],
-    async ({ pageParam = 0 }) => getProductsData(pageParam),
+    async ({ pageParam = 0, signal }) => getProductsData({ pageParam, signal }),
     {
       getNextPageParam: (lastPage) => {
-        if (!lastPage) return undefined
-        if (parseInt(lastPage.skip) > 100) return undefined
+        if ((+lastPage.skip + lastPage.limit) >= lastPage.total) return undefined
         return lastPage.skip + 30
       }
     }
   )
-
   useEffect(() => {
     if (inView) {
       fetchNextPage()
@@ -47,7 +56,7 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
-  if (isLoading) return (
+  if (!data) return (
     <div className={styles.container}>
       <HomePageLoading />
     </div>
@@ -62,7 +71,7 @@ const Home: NextPage = () => {
       </Head>
       <div className={styles.container}>
         {
-          data?.pages?.map(page => (
+          data.pages.map(page => (
             page?.products?.map((item: ProductsType, index: number) =>
               <React.Fragment key={item.id}>
                 <ProductCard
@@ -75,7 +84,7 @@ const Home: NextPage = () => {
           ))
         }
       </div>
-      {!isLoading && hasNextPage ?
+      {isFetchingNextPage || hasNextPage ?
         <LoadingNewProducts /> :
         <div style={{ textAlign: 'center', marginBlock: '2rem' }}>
           There aren&apos;t more products
@@ -90,11 +99,18 @@ export default Home
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery<DataType>(['products', 0], () => getProductsData(0))
+  await queryClient.prefetchInfiniteQuery<DataType>(
+    ['products'],
+    ({ pageParam = 0, signal }) => getProductsData({ pageParam, signal })
+  )
+  await queryClient.prefetchQuery(
+    ['categorys'],
+    ({ signal }) => getCategorysData({ signal })
+  )
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient)
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient)))
     }
   }
 }

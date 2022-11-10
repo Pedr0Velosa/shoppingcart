@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ProductsType } from "@pages/product";
+import type { ProductsType } from "@lib/types/HomePageTypes"
 import axios from 'axios'
 
 const useFetchApi = (url: string | undefined) => {

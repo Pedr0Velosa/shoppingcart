@@ -11,7 +11,6 @@ type ProductCardType = {
 }
 
 const ProductCard = ({ item, isLastItem, reference }: ProductCardType) => {
-
   if (isLastItem && reference) {
     return (
       <Link href={`/product/${ item.id }`} >

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Badge, ShoppingCartIcon, OutlineBox, AlignBox, StyledButton } from '@imports/Imports'
 import DrawerWrapper from '../Drawer/DrawerWrapper';
-import DrawerCartList from '../Drawer/DrawerCartList';
+import DrawerCartList from '../Drawer/DrawerCart/DrawerCartList';
 
 enum icon {
   medium = 'medium',
@@ -40,10 +40,7 @@ const CartComponent = (): JSX.Element => {
         open={openCartMenu}
         setOpen={setOpenCartMenu}
         anchor='right'>
-        <DrawerCartList
-          products={[]}
-          openMenu={openCartMenu}
-          setOpenMenu={setOpenCartMenu} />
+        <DrawerCartList />
       </DrawerWrapper>
     </>
   )

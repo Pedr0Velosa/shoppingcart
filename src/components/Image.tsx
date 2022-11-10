@@ -29,6 +29,7 @@ const Image = ({ isIcon, src, isSelected, ...props }: CustomProps): JSX.Element 
       onError={() => {
         setImgSrc('/assets/blur.webp')
       }}
+      placeholder='blur'
       blurDataURL={'/assets/blur.webp'}
       {...props}
     />
@@ -49,6 +50,7 @@ const Image = ({ isIcon, src, isSelected, ...props }: CustomProps): JSX.Element 
         onError={() => {
           setImgSrc('/assets/blur.webp')
         }}
+        placeholder='blur'
         blurDataURL={'/assets/blur.webp'}
         {...props}
       />

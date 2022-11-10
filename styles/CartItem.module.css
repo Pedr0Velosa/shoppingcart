@@ -1,0 +1,37 @@
+.cart-item{
+  display: grid;
+  align-items: center;
+  justify-content: space-between;
+  grid-template-columns: repeat(3,1fr);
+  gap:1.5rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.buttons-container{
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.buttons-controler{
+  display: flex;
+  align-items: center;
+  gap:2rem;
+}
+
+.button{
+  font-size: inherit;
+  display: grid;
+  place-content: center;
+}
+
+.subtract{
+  fill: red;
+}
+
+.add{
+  fill: green;
+}

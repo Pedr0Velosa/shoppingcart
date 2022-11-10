@@ -3,18 +3,26 @@ import styles from '@styles/MenuButton.module.scss'
 import DrawerWrapper from '../Drawer/DrawerWrapper'
 import { OutlineBox, AlignBox, Box } from '@imports/Imports'
 import DrawerCategoryList from '../Drawer/DrawerCategoryList';
-import useFetchApi from '@lib/hooks/useFetchApi'
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 type MenuButtonProps = {
   openMenu: boolean,
   setOpenMenu: (val: boolean) => void
 }
 
+const getCategorysData = async (signal: AbortSignal | undefined) => {
+  return await (await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }${ process.env.NEXT_PUBLIC_CATEGORYS_URL }`, { signal })
+    .then(response => response.data))
+}
+
 
 const MenuButton = ({ openMenu, setOpenMenu }: MenuButtonProps): JSX.Element => {
 
-  const { data } = useFetchApi(process.env.NEXT_PUBLIC_CATEGORYS_URL)
-
+  const { data } = useQuery(
+    ['categorys'],
+    ({ signal }) => getCategorysData(signal)
+  )
   return (
     <>
       <OutlineBox component='button' onClick={() => { setOpenMenu(!openMenu) }}>
@@ -33,7 +41,7 @@ const MenuButton = ({ openMenu, setOpenMenu }: MenuButtonProps): JSX.Element => 
         anchor='left'
       >
         <DrawerCategoryList
-          list={data as any}
+          list={data}
           setOpenMenu={setOpenMenu}
           openMenu={openMenu} />
       </DrawerWrapper>

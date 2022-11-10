@@ -3,7 +3,7 @@ import Image from '@components/Image'
 import styles from '@styles/SingleProduct.module.css'
 import { Box } from '@imports/Imports'
 
-const ProdutcImages = ({ images }: { images: string[] }) => {
+const ProductImages = ({ images }: { images: string[] }) => {
 
   const [selectedImage, setSelectedImage] = useState(images[0] || '/assetes/blur.webp')
 
@@ -34,4 +34,4 @@ const ProdutcImages = ({ images }: { images: string[] }) => {
   )
 }
 
-export default ProdutcImages
+export default ProductImages

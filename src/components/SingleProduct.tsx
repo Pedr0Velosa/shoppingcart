@@ -3,7 +3,9 @@ import { ProductsType } from '@lib/types/HomePageTypes'
 import { Typography, StyledButton, Box, Rating } from '@imports/Imports'
 import styles from '@styles/SingleProduct.module.css'
 import Carousel from './Carousel/Carousel'
-import ProdutcImages from './ProductImages/ProdutcImages'
+import ProductImages from './ProductImages/ProductImages'
+import useCartContext from '@lib/contexts/CartContext/useCartContext'
+import { ACTIONS } from '@lib/contexts/CartContext/cartReducer/cartReducer'
 
 type SingleProductProps = {
   product: ProductsType | null,
@@ -14,7 +16,7 @@ type SingleProductProps = {
 const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.Element => {
 
   const [showRatingDetails, setShowRatingDetails] = useState<boolean>(false)
-
+  const { dispatch } = useCartContext()
   if (!product) {
     return (
       <Box>
@@ -76,7 +78,7 @@ const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.E
       </Box>
       <Box className={styles.image}>
         <Carousel images={product.images} />
-        <ProdutcImages images={product.images} />
+        <ProductImages images={product.images} />
       </Box>
       <Box className={styles.description}>
         <Typography variant='body1'>
@@ -97,7 +99,9 @@ const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.E
         <Typography>
           Stock: {product.stock}
         </Typography>
-        <StyledButton>
+        <StyledButton
+          onClick={() => dispatch({ type: ACTIONS.ADD_ITEM, payload: product })}
+        >
           add cart
         </StyledButton>
       </Box>

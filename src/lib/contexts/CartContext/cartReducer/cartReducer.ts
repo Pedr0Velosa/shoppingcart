@@ -6,11 +6,12 @@ export const ACTIONS = {
   UPDATE_ITEM: 'update-item'
 }
 
-export const reducer = (state: stateCartType, { type, payload }: dispatchType) => {
+export const reducer = (state: stateCartType, { type, payload: { id, title, brand, price, thumbnail } }: dispatchType) => {
+  console.log(state)
   switch (type) {
     case ACTIONS.ADD_ITEM:
       return {
-        ...state, products: payload
+        ...state, products: [...state.products, { id, title, brand, price, thumbnail }]
       }
     case ACTIONS.REMOVE_ITEM:
       return {
@@ -26,6 +27,6 @@ export const reducer = (state: stateCartType, { type, payload }: dispatchType) =
 }
 
 export const initialState: stateCartType = {
-  products: null,
+  products: [],
   total: 0
 }

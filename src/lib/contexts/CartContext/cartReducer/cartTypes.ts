@@ -1,19 +1,17 @@
 type stateProductType = {
-  id: number | null,
-  title: string | null,
-  price: number | null,
-  thumbnail: string | null,
-  url: string | null,
-  qtd: number | null,
-  subtotal: number | null
+  id: number,
+  title: string,
+  brand: string,
+  price: number,
+  thumbnail: string,
 }
 
 export type stateCartType = {
-  products: stateProductType | null,
+  products: stateProductType[] | [],
   total: number
 }
 
 export type dispatchType = {
   type: string,
-  payload: string
+  payload: stateProductType
 }

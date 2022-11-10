@@ -2,7 +2,7 @@ import React from 'react'
 import { NextPage } from 'next/types'
 import SingleProduct from '@components/SingleProduct'
 import { GetServerSideProps } from 'next/types'
-import type { ProductsType } from '.'
+import type { ProductsType } from '@lib/types/HomePageTypes'
 import axios from 'axios'
 import Head from 'next/head'
 
@@ -16,9 +16,7 @@ const Product: NextPage<ProductProps> = ({ data }): JSX.Element => {
       <Head>
         <title>{data.title || 'Erro ao encontrar produto'}</title>
       </Head>
-      <div>
-        <SingleProduct product={data} discount={Math.random() > 2} />
-      </div>
+      <SingleProduct product={data} discount={Math.random() > 2} />
     </>
 
   )

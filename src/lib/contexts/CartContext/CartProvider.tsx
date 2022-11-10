@@ -7,6 +7,7 @@ type cartContextType = {
   dispatch: Dispatch<dispatchType>
 }
 
+//arrumar type
 export const cartContext = createContext({} as cartContextType)
 
 const CartProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
