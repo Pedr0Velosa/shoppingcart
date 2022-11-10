@@ -6,9 +6,12 @@ type stateProductType = {
   thumbnail: string,
 }
 
+export interface stateProductTypeFinal extends stateProductType {
+  qtd: number
+}
+
 export type stateCartType = {
-  products: stateProductType[] | [],
-  total: number
+  products: stateProductTypeFinal[] | [],
 }
 
 export type dispatchType = {

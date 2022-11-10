@@ -17,6 +17,7 @@ const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.E
 
   const [showRatingDetails, setShowRatingDetails] = useState<boolean>(false)
   const { dispatch } = useCartContext()
+
   if (!product) {
     return (
       <Box>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Badge, ShoppingCartIcon, OutlineBox, AlignBox, StyledButton } from '@imports/Imports'
 import DrawerWrapper from '../Drawer/DrawerWrapper';
 import DrawerCartList from '../Drawer/DrawerCart/DrawerCartList';
+import useCartContext from '@lib/contexts/CartContext/useCartContext';
 
 enum icon {
   medium = 'medium',
@@ -13,6 +14,9 @@ enum icon {
 const CartComponent = (): JSX.Element => {
   const [iconSize, setIconSize] = useState<icon | undefined>(icon.medium);
   const [openCartMenu, setOpenCartMenu] = useState<boolean>(false);
+
+  const { getTotalAmountCartItems } = useCartContext()
+
 
   useEffect(() => {
     const windowSize = window.innerWidth
@@ -30,7 +34,7 @@ const CartComponent = (): JSX.Element => {
             sx={{ minWidth: 'unset' }}
             onClick={() => setOpenCartMenu(!openCartMenu)}
           >
-            <Badge badgeContent={6} max={10} color="warning">
+            <Badge badgeContent={getTotalAmountCartItems()} max={10} color="warning">
               <ShoppingCartIcon fontSize={iconSize} />
             </Badge>
           </StyledButton>
