@@ -9,12 +9,10 @@ import { ACTIONS } from '@lib/contexts/CartContext/cartReducer/cartReducer'
 
 type SingleProductProps = {
   product: ProductsType | null,
-  discount?: boolean
 }
 
 
-const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.Element => {
-
+const SingleProduct = ({ product }: SingleProductProps): JSX.Element => {
   const [showRatingDetails, setShowRatingDetails] = useState<boolean>(false)
   const { dispatch } = useCartContext()
 
@@ -45,6 +43,8 @@ const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.E
       </>
     )
   }
+
+
 
   return (
     <Box className={styles.container}>
@@ -87,14 +87,9 @@ const SingleProduct = ({ product, discount = false }: SingleProductProps): JSX.E
         </Typography>
       </Box>
       <Box className={styles.price}>
-        {!discount ?
-          <Typography component={'span'}>
-            {handleNumberFormat(product.price)}
-          </Typography> :
-          <Typography>
-            discount
-          </Typography>
-        }
+        <Typography component={'span'}>
+          {handleNumberFormat(product.price)}
+        </Typography>
       </Box>
       <Box className={styles.cart}>
         <Typography>

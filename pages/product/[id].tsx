@@ -16,7 +16,7 @@ const Product: NextPage<ProductProps> = ({ data }): JSX.Element => {
       <Head>
         <title>{data.title || 'Erro ao encontrar produto'}</title>
       </Head>
-      <SingleProduct product={data} discount={Math.random() > 2} />
+      <SingleProduct product={data} />
     </>
 
   )

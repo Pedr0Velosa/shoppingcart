@@ -44,6 +44,13 @@
   font-size: 1.25rem;
   line-height: 1.6;
 }
+/* discounted */
+.discount{
+  text-decoration: line-through;
+}
+.discounted{
+  font-size: 1rem;
+}
 /* *** */
 
 @media (min-width:760px){

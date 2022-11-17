@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 
 import styles from '@styles/Homes.module.css'
@@ -13,6 +13,7 @@ import axios from 'axios'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { DataType, ProductsType } from '@lib/types/HomePageTypes'
+import { useFilterContext } from '@lib/utils/Imports'
 
 type GetProductsDataType = {
   pageParam: number,
@@ -30,17 +31,16 @@ const getCategorysData = async ({ signal }: { signal: AbortSignal | undefined })
 
 const Home: NextPage = () => {
 
-  const { ref, inView } = useInView();
-
+  const { state } = useFilterContext()
+  const { ref, inView } = useInView({ triggerOnce: true });
   const {
     fetchNextPage,
     isFetchingNextPage,
-    isLoading,
     error,
     hasNextPage,
     data
   } = useInfiniteQuery<DataType>(
-    ['products'],
+    ['products', state.category],
     async ({ pageParam = 0, signal }) => getProductsData({ pageParam, signal }),
     {
       getNextPageParam: (lastPage) => {
@@ -49,6 +49,7 @@ const Home: NextPage = () => {
       }
     }
   )
+
   useEffect(() => {
     if (inView) {
       fetchNextPage()
@@ -72,7 +73,7 @@ const Home: NextPage = () => {
       <div className={styles.container}>
         {
           data.pages.map(page => (
-            page?.products?.map((item: ProductsType, index: number) =>
+            page?.products?.filter(item => item.title.toLowerCase().includes(state.query?.toLowerCase() || '')).map((item: ProductsType, index: number) =>
               <React.Fragment key={item.id}>
                 <ProductCard
                   item={item}
@@ -84,11 +85,13 @@ const Home: NextPage = () => {
           ))
         }
       </div>
-      {isFetchingNextPage || hasNextPage ?
+      {isFetchingNextPage ?
         <LoadingNewProducts /> :
-        <div style={{ textAlign: 'center', marginBlock: '2rem' }}>
-          There aren&apos;t more products
-        </div>
+        hasNextPage && !state.query ?
+          <LoadingNewProducts /> :
+          <div style={{ textAlign: 'center', marginBlock: '2rem' }}>
+            There aren&apos;t more products
+          </div>
       }
     </>
   )

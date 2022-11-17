@@ -31,11 +31,14 @@ const StyledInput = styled(TextField)({
   minWidth: 200
 });
 
+type handleSubmitType = {
+  e?: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  reset?: boolean
+}
 
 const SearchBar = (): JSX.Element => {
   const { dispatch } = useFilterContext()
   const [inputValue, setInputValue] = useState<string | null>(null)
-
   const InputPropsObj = {
     startAdornment: (
       <InputAdornment position='start'>
@@ -50,7 +53,7 @@ const SearchBar = (): JSX.Element => {
       inputValue ?
         <InputAdornment
           position='end'
-          onClick={() => setInputValue(null)}
+          onClick={() => handleSubmit({ reset: true })}
           sx={{ cursor: 'pointer' }}
         >
           <Close
@@ -60,18 +63,20 @@ const SearchBar = (): JSX.Element => {
     )
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch({ type: ACTIONS.QUERY, payload: inputValue || "" })
+  const handleSubmit = ({ e, reset = false }: handleSubmitType) => {
+    if (reset || !e) {
+      setInputValue(null)
+      dispatch({ type: ACTIONS.QUERY, payload: null || "" })
+      return
+    }
+    setInputValue(e.target.value)
+    dispatch({ type: ACTIONS.QUERY, payload: e.target.value || "" })
   }
 
   return (
     <>
       <Box
-        component="form"
-        autoComplete='off'
         sx={{ flex: 2, order: { xs: 2, sm: 0 } }}
-        onSubmit={handleSubmit}
       >
         <StyledInput
           id="search"
@@ -79,7 +84,7 @@ const SearchBar = (): JSX.Element => {
           variant="outlined"
           fullWidth
           value={inputValue || ''}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleSubmit({ e })}
           InputProps={InputPropsObj}
         />
       </Box>
