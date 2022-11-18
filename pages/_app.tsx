@@ -6,6 +6,7 @@ import CartProvider from '@lib/contexts/CartContext/CartProvider';
 import FilterProvider from '@lib/contexts/FilterContext/FilterProvider';
 import { Hydrate, QueryClient, QueryClientProvider, DehydratedState } from 'react-query'
 import { useRef } from 'react'
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 
 interface ThemeInterface {
   colors: {
@@ -27,15 +28,17 @@ export default function App({ Component, pageProps }: AppProps<{ dehydratedState
     <>
       <QueryClientProvider client={queryClient.current}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
-            <FilterProvider>
-              <CartProvider>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </CartProvider>
-            </FilterProvider>
-          </ThemeProvider>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+              <FilterProvider>
+                <CartProvider>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </CartProvider>
+              </FilterProvider>
+            </ThemeProvider>
+          </StyledEngineProvider>
         </Hydrate>
       </QueryClientProvider>
     </>
