@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Settings, AccountCircleIcon, useFilterContext, Typography } from '@imports/Imports'
 import { ACTIONS } from '@lib/contexts/FilterContext/filterReducer/filterReducer';
-import { useInfiniteQuery, useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import axios from 'axios'
 
-type GetProductsDataType = {
-  pageParam: number,
-  signal: AbortSignal | undefined,
-  item: string
-}
 
 type DrawerCategoryListType = {
   list: string[] | undefined,

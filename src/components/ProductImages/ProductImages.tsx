@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from '@components/Image'
 import styles from '@styles/SingleProduct.module.css'
 import { Box } from '@imports/Imports'
 
 const ProductImages = ({ images }: { images: string[] }) => {
 
-  const [selectedImage, setSelectedImage] = useState(images[0] || '/assetes/blur.webp')
+  const [selectedImage, setSelectedImage] = useState<string | undefined>()
+
+  useEffect(() => {
+    setSelectedImage(images[0] || '/assetes/blur.webp')
+  }, [images])
 
   return (
     <Box className={styles['image-container']}>
@@ -24,7 +28,7 @@ const ProductImages = ({ images }: { images: string[] }) => {
         ))}
       </Box>
       <Image
-        src={selectedImage}
+        src={selectedImage || images[0] || '/assetes/blur.webp'}
         alt={'product image'}
         width={500}
         height={500}

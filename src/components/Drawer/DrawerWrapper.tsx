@@ -1,5 +1,7 @@
 import React from 'react';
 import { Drawer } from '@imports/Imports'
+import { TiTimes } from 'react-icons/ti'
+import styles from '@styles/CartItem.module.css'
 
 type AnchorType = 'top' | 'bottom' | 'left' | 'right' | undefined
 type DrawerWrapperType = {
@@ -15,8 +17,8 @@ const DrawerWrapper = ({ open, setOpen, anchor, children }: DrawerWrapperType): 
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setOpen(open);
+    console.log(open)
   };
 
   return (
@@ -24,9 +26,20 @@ const DrawerWrapper = ({ open, setOpen, anchor, children }: DrawerWrapperType): 
       anchor={anchor}
       open={open}
       onClose={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
     >
-      {children}
+      <div style={{ paddingInline: '1rem' }}>
+        <div
+          className={styles['close-button']}
+          style={anchor === 'right' ? { marginLeft: 'auto' } : { marginRight: 'auto' }}
+        >
+          <button
+            onClick={toggleDrawer(false)}
+          >
+            <TiTimes size={'2.5em'} />
+          </button>
+        </div>
+        {children}
+      </div>
     </Drawer>
   );
 }

@@ -11,7 +11,7 @@ export interface stateProductTypeFinal extends stateProductType {
 }
 
 export type stateCartType = {
-  products: stateProductTypeFinal[] | [],
+  products: stateProductTypeFinal[],
 }
 
 export type dispatchType = {

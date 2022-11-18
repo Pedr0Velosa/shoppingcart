@@ -4,7 +4,7 @@ import { Typography, StyledButton, Box, Rating } from '@imports/Imports'
 import styles from '@styles/SingleProduct.module.css'
 import Carousel from './Carousel/Carousel'
 import ProductImages from './ProductImages/ProductImages'
-import useCartContext from '@lib/contexts/CartContext/useCartContext'
+import useCartContext from '@lib/hooks/useCartContext'
 import { ACTIONS } from '@lib/contexts/CartContext/cartReducer/cartReducer'
 
 type SingleProductProps = {

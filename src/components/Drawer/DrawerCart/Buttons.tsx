@@ -3,12 +3,12 @@ import { AiFillMinusCircle } from 'react-icons/ai';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoMdTrash } from 'react-icons/io';
 import styles from '@styles/CartItem.module.css'
-import useCartContext from '@lib/contexts/CartContext/useCartContext'
+import useCartContext from '@lib/hooks/useCartContext'
 import { ACTIONS } from '@lib/contexts/CartContext/cartReducer/cartReducer'
 
 const Buttons = ({ item }: { item: any }) => {
 
-  const { state, dispatch } = useCartContext()
+  const { dispatch } = useCartContext()
 
   return (
     <div className={styles['buttons-container']}>
@@ -22,7 +22,7 @@ const Buttons = ({ item }: { item: any }) => {
             size={'1em'}
           />
         </button>
-        <span>{item.qtd}</span>
+        <span style={{ minWidth: '35px', maxWidth: '35px' }}>{item.qtd}</span>
         <button
           className={styles.button}
           onClick={() => { dispatch({ type: ACTIONS.ADD_ITEM, payload: item }) }}

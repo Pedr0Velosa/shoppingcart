@@ -3,8 +3,17 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['dummyjson.com'],
-  }
+    domains: ['i.dummyjson.com'],
+  },
+  async redirects () {
+    return [
+      {
+        source: '/',
+        destination: '/product',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

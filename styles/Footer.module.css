@@ -1,0 +1,21 @@
+.footer{
+  background-color: #e2e2e2;
+}
+
+.back{
+  text-align: center;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.social{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.coded{
+  margin-block: 1rem 2rem;
+  margin-inline: auto;
+  width: max-content;
+}

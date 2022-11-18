@@ -2,10 +2,10 @@
   display: grid;
   align-items: center;
   justify-content: space-between;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3,minmax(100px,150px));
   gap:1.5rem;
-  padding: 1rem;
   text-align: center;
+  margin-bottom: 1.25rem;
 }
 
 .buttons-container{
@@ -34,4 +34,16 @@
 
 .add{
   fill: green;
+}
+
+.price{
+  text-align: end;
+  font-size: 2rem;
+}
+
+.close-button{
+  display: block;
+  width: max-content;
+  margin-top: 0.5rem;
+  cursor: pointer;
 }

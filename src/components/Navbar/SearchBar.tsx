@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { styled } from '@mui/system';
 
 import { Search, Box, TextField, InputAdornment, Close } from '@imports/Imports'
-import useFilterContext from '@lib/contexts/FilterContext/useFilterContext';
+import useFilterContext from '@lib/hooks/useFilterContext';
 import { ACTIONS } from '@lib/contexts/FilterContext/filterReducer/filterReducer';
 
 const StyledInput = styled(TextField)({

@@ -19,6 +19,7 @@ export type DataType = {
   total: number
 }
 
-type HomeProps = {
-  items: DataType
+export type GetProductsDataType = {
+  pageParam: number,
+  signal: AbortSignal | undefined
 }

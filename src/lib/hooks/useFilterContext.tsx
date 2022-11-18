@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react';
-import { filterContext } from './FilterProvider';
+import { filterContext } from '../contexts/FilterContext/FilterProvider';
 
 const useFilterContext = () => {
   const { state, dispatch } = useContext(filterContext)

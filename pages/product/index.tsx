@@ -12,13 +12,9 @@ import { dehydrate, QueryClient, useInfiniteQuery } from 'react-query'
 import axios from 'axios'
 
 import type { NextPage, GetStaticProps } from 'next'
-import type { DataType, ProductsType } from '@lib/types/HomePageTypes'
+import type { DataType, ProductsType, GetProductsDataType } from '@lib/types/HomePageTypes'
 import { useFilterContext } from '@lib/utils/Imports'
 
-type GetProductsDataType = {
-  pageParam: number,
-  signal: AbortSignal | undefined
-}
 
 const getProductsData = async ({ pageParam = 0, signal }: GetProductsDataType) => {
   return await (await axios.get(`${ process.env.NEXT_PUBLIC_BASE_URL }/products?skip=${ pageParam ?? 0 }&limit=30`, { signal })

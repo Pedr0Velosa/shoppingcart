@@ -14,7 +14,7 @@ import Rating from '@mui/material/Rating';
 import {List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider} from '@mui/material';
 import {Settings} from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import useFilterContext from '@lib/contexts/FilterContext/useFilterContext';
+import useFilterContext from '@lib/hooks/useFilterContext';
 import Drawer from '@mui/material/Drawer';
 
 const OutlineBox = styled(Box)({

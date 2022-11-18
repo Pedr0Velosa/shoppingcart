@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Badge, ShoppingCartIcon, OutlineBox, AlignBox, StyledButton } from '@imports/Imports'
 import DrawerWrapper from '../Drawer/DrawerWrapper';
 import DrawerCartList from '../Drawer/DrawerCart/DrawerCartList';
-import useCartContext from '@lib/contexts/CartContext/useCartContext';
+import useCartContext from '@lib/hooks/useCartContext';
 
 enum icon {
   medium = 'medium',
@@ -17,12 +17,10 @@ const CartComponent = (): JSX.Element => {
 
   const { getTotalAmountCartItems } = useCartContext()
 
-
   useEffect(() => {
     const windowSize = window.innerWidth
     if (windowSize > 425) return setIconSize(icon.large)
   }, [])
-
 
   return (
     <>
@@ -43,10 +41,10 @@ const CartComponent = (): JSX.Element => {
       <DrawerWrapper
         open={openCartMenu}
         setOpen={setOpenCartMenu}
-        anchor='right'>
+        anchor='right'
+      >
         <DrawerCartList />
-      </DrawerWrapper>
-    </>
+      </DrawerWrapper>   </>
   )
 }
 
