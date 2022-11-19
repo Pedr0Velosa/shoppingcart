@@ -1,3 +1,11 @@
+# Final version
+
+To see the final deployed version of the app, visit [https://shoppingcart-two-tawny.vercel.app/product](https://shoppingcart-two-tawny.vercel.app/product)
+
+### Note:
+
+The website does not support dark mode, only light mode
+
 ## Getting Started
 
 First, install de dependencies:
