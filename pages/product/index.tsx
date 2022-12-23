@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect,useState } from 'react'
 import Head from 'next/head'
+import {useRouter} from 'next/router'
 
 import styles from '@styles/Homes.module.css'
 
@@ -14,6 +15,7 @@ import axios from 'axios'
 import type { NextPage, GetStaticProps } from 'next'
 import type { DataType, ProductsType, GetProductsDataType } from '@lib/types/HomePageTypes'
 import { useFilterContext } from '@lib/utils/Imports'
+import useLoadingPage from '@lib/hooks/useLoadingPage'
 
 
 const getProductsData = async ({ pageParam = 0, signal }: GetProductsDataType) => {
@@ -34,7 +36,7 @@ const Home: NextPage = () => {
     isFetchingNextPage,
     error,
     hasNextPage,
-    data
+    data,
   } = useInfiniteQuery<DataType>(
     ['products', state.category],
     async ({ pageParam = 0, signal }) => getProductsData({ pageParam, signal }),
@@ -46,12 +48,19 @@ const Home: NextPage = () => {
     }
   )
 
+  const isLoading = useLoadingPage()
+
+
   useEffect(() => {
     if (inView) {
       fetchNextPage()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
+  
+  if(isLoading){
+    return <LoadingNewProducts/>
+  }
 
   if (!data) return (
     <div className={styles.container}>
@@ -60,7 +69,7 @@ const Home: NextPage = () => {
   )
 
   if (error) return <>Error</>
-
+  
   return (
     <>
       <Head>

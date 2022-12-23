@@ -43,9 +43,6 @@ const SingleProduct = ({ product }: SingleProductProps): JSX.Element => {
       </>
     )
   }
-
-
-
   return (
     <Box className={styles.container}>
       <Box className={styles.name}>

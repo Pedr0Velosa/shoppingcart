@@ -47,7 +47,7 @@ const DrawerCategoryList = ({ list, openMenu, setOpenMenu }: DrawerCategoryListT
   useEffect(() => {
     if (!state.category) return
     refetch()
-  }, [state.category])
+  }, [refetch, state.category])
   return (
     <>
       <List>
@@ -72,7 +72,7 @@ const DrawerCategoryList = ({ list, openMenu, setOpenMenu }: DrawerCategoryListT
                 primary={
                   <Typography
                     variant='body2'
-                    component='li'
+                    component='p'
                   >
                     {item}
                   </Typography>
